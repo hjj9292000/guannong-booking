@@ -46,17 +46,15 @@
     position: relative;
     overflow: hidden;
   }
-
   .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: 
+    background-image:
       radial-gradient(ellipse at 20% 50%, rgba(77,175,130,0.15) 0%, transparent 60%),
       radial-gradient(ellipse at 80% 20%, rgba(45,122,79,0.2) 0%, transparent 50%);
     pointer-events: none;
   }
-
   .hero-badge {
     display: inline-flex;
     align-items: center;
@@ -70,22 +68,18 @@
     margin-bottom: 1rem;
     color: rgba(255,255,255,0.85);
   }
-
   .hero h1 {
     font-family: 'Noto Serif TC', serif;
     font-size: clamp(22px, 4vw, 32px);
     font-weight: 700;
     line-height: 1.4;
     margin-bottom: 0.5rem;
-    color: white;
   }
-
   .hero-sub {
     font-size: 14px;
     color: rgba(255,255,255,0.65);
     margin-bottom: 1.5rem;
   }
-
   .hero-stats {
     display: inline-flex;
     gap: 2rem;
@@ -94,12 +88,11 @@
     border-radius: var(--radius);
     padding: 0.75rem 1.5rem;
   }
-
   .stat { text-align: center; }
   .stat-num { font-size: 20px; font-weight: 700; color: #7de0b0; }
   .stat-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
-  /* === MAIN CONTAINER === */
+  /* === CONTAINER === */
   .container {
     max-width: 720px;
     margin: 0 auto;
@@ -114,7 +107,6 @@
     gap: 0;
     margin-bottom: 2rem;
   }
-
   .step-item {
     display: flex;
     align-items: center;
@@ -122,41 +114,41 @@
     font-size: 13px;
     color: var(--text-muted);
   }
-
   .step-item.active { color: var(--green-mid); font-weight: 500; }
   .step-item.done { color: var(--green-light); }
-
   .step-num {
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     border: 1.5px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 500;
     background: white;
   }
+  .step-item.active .step-num { border-color: var(--green-mid); background: var(--green-mid); color: white; }
+  .step-item.done .step-num { border-color: var(--green-light); background: var(--green-pale); color: var(--green-mid); }
+  .step-line { width: 40px; height: 1px; background: var(--border); margin: 0 4px; }
 
-  .step-item.active .step-num {
-    border-color: var(--green-mid);
-    background: var(--green-mid);
-    color: white;
+  /* === LOADING OVERLAY === */
+  .loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(243,250,246,0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    gap: 1rem;
   }
-
-  .step-item.done .step-num {
-    border-color: var(--green-light);
-    background: var(--green-pale);
-    color: var(--green-mid);
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--border);
+    border-top-color: var(--green-mid);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
   }
-
-  .step-line {
-    width: 40px;
-    height: 1px;
-    background: var(--border);
-    margin: 0 4px;
-  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-overlay p { font-size: 14px; color: var(--text-secondary); }
 
   /* === NOTICE === */
   .notice {
@@ -173,7 +165,6 @@
     align-items: flex-start;
     line-height: 1.6;
   }
-
   .notice-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
   /* === SESSION CARDS === */
@@ -187,13 +178,7 @@
     align-items: center;
     gap: 8px;
   }
-
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border-light);
-  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
 
   .sessions-grid {
     display: grid;
@@ -201,7 +186,6 @@
     gap: 10px;
     margin-bottom: 1.5rem;
   }
-
   .session-card {
     background: white;
     border: 1.5px solid var(--border-light);
@@ -212,7 +196,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .session-card::before {
     content: '';
     position: absolute;
@@ -223,311 +206,105 @@
     transition: transform 0.2s ease;
     transform-origin: left;
   }
-
-  .session-card:hover:not(.booked) {
-    border-color: var(--green-light);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(45,122,79,0.12);
-  }
-
   .session-card:hover:not(.booked)::before { transform: scaleX(1); }
-
-  .session-card.selected {
-    border-color: var(--green-mid);
-    background: var(--green-pale);
-    box-shadow: 0 0 0 3px rgba(45,122,79,0.1);
-  }
-
+  .session-card:hover:not(.booked) { border-color: var(--green-light); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(45,122,79,0.12); }
+  .session-card.selected { border-color: var(--green-mid); background: var(--green-pale); box-shadow: 0 0 0 3px rgba(45,122,79,0.1); }
   .session-card.selected::before { transform: scaleX(1); background: var(--green-mid); }
-
-  .session-card.booked {
-    opacity: 0.55;
-    cursor: not-allowed;
-    background: #f8f8f8;
-  }
-
-  .session-month {
-    font-size: 11px;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    margin-bottom: 2px;
-  }
-
-  .session-date {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.2;
-    margin-bottom: 6px;
-  }
-
-  .session-weekday {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-  }
-
-  .session-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-weight: 500;
-  }
-
-  .badge-open {
-    background: var(--green-pale);
-    color: var(--green-mid);
-    border: 1px solid #b3ddc8;
-  }
-
-  .badge-booked {
-    background: #f0f0f0;
-    color: #999;
-    border: 1px solid #ddd;
-  }
-
-  .selected-check {
-    position: absolute;
-    top: 10px; right: 10px;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: var(--green-mid);
-    color: white;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-  }
-
+  .session-card.booked { opacity: 0.55; cursor: not-allowed; background: #f8f8f8; }
+  .session-month { font-size: 11px; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 2px; }
+  .session-date { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; color: var(--text-primary); line-height: 1.2; margin-bottom: 6px; }
+  .session-weekday { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .session-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+  .badge-open { background: var(--green-pale); color: var(--green-mid); border: 1px solid #b3ddc8; }
+  .badge-booked { background: #f0f0f0; color: #999; border: 1px solid #ddd; }
+  .selected-check { position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; border-radius: 50%; background: var(--green-mid); color: white; display: none; align-items: center; justify-content: center; font-size: 11px; }
   .session-card.selected .selected-check { display: flex; }
 
   /* === BUTTONS === */
   .btn-primary {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    background: var(--green-deep);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 15px;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.03em;
+    display: block; width: 100%; padding: 14px;
+    background: var(--green-deep); color: white; border: none;
+    border-radius: var(--radius); font-size: 15px;
+    font-family: 'Noto Sans TC', sans-serif; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em;
   }
-
-  .btn-primary:hover:not(:disabled) {
-    background: var(--green-mid);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(26,74,46,0.25);
-  }
-
-  .btn-primary:disabled {
-    background: #c5d5cc;
-    color: #8aab99;
-    cursor: not-allowed;
-    transform: none;
-  }
+  .btn-primary:hover:not(:disabled) { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,74,46,0.25); }
+  .btn-primary:disabled { background: #c5d5cc; color: #8aab99; cursor: not-allowed; transform: none; }
 
   .btn-secondary {
-    padding: 12px 20px;
-    background: white;
-    color: var(--text-secondary);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    font-family: 'Noto Sans TC', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
+    padding: 12px 20px; background: white; color: var(--text-secondary);
+    border: 1.5px solid var(--border); border-radius: var(--radius);
+    font-size: 14px; font-family: 'Noto Sans TC', sans-serif;
+    cursor: pointer; transition: all 0.2s;
   }
+  .btn-secondary:hover { border-color: var(--green-mid); color: var(--green-mid); }
 
-  .btn-secondary:hover {
-    border-color: var(--green-mid);
-    color: var(--green-mid);
-  }
-
-  /* === FORM STEP 2 === */
+  /* === FORM === */
   .form-card {
-    background: white;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
+    background: white; border: 1px solid var(--border-light);
+    border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem;
   }
-
   .form-card-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
-    margin-bottom: 1rem;
-    padding-bottom: 8px;
+    font-size: 13px; font-weight: 500; color: var(--text-muted);
+    letter-spacing: 0.04em; margin-bottom: 1rem; padding-bottom: 8px;
     border-bottom: 1px solid var(--border-light);
   }
-
   .field { margin-bottom: 1rem; }
   .field:last-child { margin-bottom: 0; }
-
-  .field label {
-    display: block;
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-
+  .field label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; font-weight: 500; }
   .field label .req { color: #e05555; margin-left: 2px; }
-
-  .field input, .field select, .field textarea {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: 'Noto Sans TC', sans-serif;
-    color: var(--text-primary);
-    background: white;
-    transition: border-color 0.15s;
-    outline: none;
+  .field input, .field textarea {
+    width: 100%; padding: 10px 14px;
+    border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+    font-size: 14px; font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text-primary); background: white;
+    transition: border-color 0.15s; outline: none;
   }
-
-  .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: var(--green-mid);
-    box-shadow: 0 0 0 3px rgba(45,122,79,0.08);
-  }
-
+  .field input:focus, .field textarea:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(45,122,79,0.08); }
   .field textarea { height: 90px; resize: vertical; line-height: 1.6; }
-
-  .field-hint {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 5px;
-  }
-
+  .field-hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
   .selected-session-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--green-pale);
-    border: 1px solid #b3ddc8;
-    border-radius: var(--radius-sm);
-    padding: 8px 14px;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--green-deep);
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-pale); border: 1px solid #b3ddc8;
+    border-radius: var(--radius-sm); padding: 8px 14px;
+    font-size: 14px; font-weight: 500; color: var(--green-deep);
   }
-
-  .form-actions {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-top: 1.5rem;
-  }
-
+  .form-actions { display: flex; gap: 12px; align-items: center; margin-top: 1.5rem; }
   .form-actions .btn-primary { flex: 1; }
 
-  /* === SUCCESS SCREEN === */
-  .success-wrap {
-    text-align: center;
-    padding: 2rem 0;
+  /* === ERROR BANNER === */
+  .error-banner {
+    background: #fff0f0; border: 1px solid #f5c0c0;
+    border-radius: var(--radius-sm); padding: 12px 16px;
+    font-size: 13px; color: #c0392b; margin-bottom: 1rem;
+    display: none;
   }
 
+  /* === SUCCESS === */
+  .success-wrap { text-align: center; padding: 2rem 0; }
   .success-icon-wrap {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: var(--green-pale);
-    border: 2px solid #b3ddc8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.25rem;
-    font-size: 32px;
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--green-pale); border: 2px solid #b3ddc8;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.25rem; font-size: 32px;
     animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
   }
-
-  @keyframes popIn {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-
-  .success-wrap h2 {
-    font-family: 'Noto Serif TC', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--green-deep);
-    margin-bottom: 0.5rem;
-  }
-
-  .success-wrap > p {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-  }
-
-  .summary-card {
-    background: white;
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin: 0 auto 1.5rem;
-    text-align: left;
-  }
-
-  .summary-header {
-    background: var(--green-deep);
-    color: white;
-    padding: 12px 16px;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-  }
-
-  .summary-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border-light);
-    font-size: 14px;
-    gap: 12px;
-  }
-
+  @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .success-wrap h2 { font-family: 'Noto Serif TC', serif; font-size: 22px; font-weight: 700; color: var(--green-deep); margin-bottom: 0.5rem; }
+  .success-wrap > p { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.8; }
+  .summary-card { background: white; border: 1px solid var(--border-light); border-radius: var(--radius); overflow: hidden; margin: 0 auto 1.5rem; text-align: left; }
+  .summary-header { background: var(--green-deep); color: white; padding: 12px 16px; font-size: 13px; letter-spacing: 0.04em; }
+  .summary-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 16px; border-bottom: 1px solid var(--border-light); font-size: 14px; gap: 12px; }
   .summary-row:last-child { border-bottom: none; }
   .summary-label { color: var(--text-muted); flex-shrink: 0; }
   .summary-value { color: var(--text-primary); font-weight: 500; text-align: right; }
 
-  .reset-area { margin-top: 1rem; }
+  .fade-in { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* === FOOTER === */
-  footer {
-    text-align: center;
-    padding: 1.5rem 1rem;
-    font-size: 12px;
-    color: var(--text-muted);
-    border-top: 1px solid var(--border-light);
-    background: white;
-  }
+  footer { text-align: center; padding: 1.5rem 1rem; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-light); background: white; }
 
-  /* === ANIMATIONS === */
-  .fade-in {
-    animation: fadeIn 0.3s ease;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* === RESPONSIVE === */
   @media (max-width: 480px) {
     .sessions-grid { grid-template-columns: 1fr 1fr; }
     .hero-stats { gap: 1.25rem; padding: 0.75rem 1rem; }
@@ -537,13 +314,21 @@
 </head>
 <body>
 
+<!-- ====================================================
+  ⚠️  請將下方 SCRIPT_URL 換成你的 Apps Script 部署網址
+  例如：https://script.google.com/macros/s/XXXXXXXX/exec
+===================================================== -->
+<script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmwzvELDQp_ydJKcA97X8aT4O1JJvyagFjNhCixI32UAS3dLItwUUX_vGsD75PrK4S/exec";
+</script>
+
 <header class="hero">
   <div class="hero-badge">🌿 慈心有機農業發展基金會</div>
   <h1>關農慈心農場<br>知性之旅</h1>
   <p class="hero-sub">2025 下半年場次預約</p>
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-num" id="avail-count">6</div>
+      <div class="stat-num" id="avail-count">—</div>
       <div class="stat-label">可預約場次</div>
     </div>
     <div class="stat">
@@ -557,52 +342,40 @@
   </div>
 </header>
 
+<!-- 載入中遮罩 -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <p id="loading-msg">正在讀取場次狀態…</p>
+</div>
+
 <div class="container">
 
-  <!-- STEP INDICATOR -->
   <div class="steps" id="step-indicator">
-    <div class="step-item active" id="si-1">
-      <div class="step-num">1</div>
-      選擇場次
-    </div>
+    <div class="step-item active" id="si-1"><div class="step-num">1</div>選擇場次</div>
     <div class="step-line"></div>
-    <div class="step-item" id="si-2">
-      <div class="step-num">2</div>
-      填寫資料
-    </div>
+    <div class="step-item" id="si-2"><div class="step-num">2</div>填寫資料</div>
     <div class="step-line"></div>
-    <div class="step-item" id="si-3">
-      <div class="step-num">3</div>
-      完成
-    </div>
+    <div class="step-item" id="si-3"><div class="step-num">3</div>完成</div>
   </div>
 
-  <!-- STEP 1: 選場次 -->
+  <!-- STEP 1 -->
   <div id="view-step1" class="fade-in">
     <div class="notice">
       <span class="notice-icon">📋</span>
       <span>每場次限一個團體獨立預約，不開放併團。人數建議 <strong>100 人以內</strong>最為舒適，最多不超過 130 人、最少 40 人。</span>
     </div>
-
     <div class="section-title">選擇您的場次</div>
-
     <div class="sessions-grid" id="sessions-grid"></div>
-
-    <button class="btn-primary" id="btn-next1" disabled onclick="goStep2()">
-      繼續填寫預約資料 →
-    </button>
+    <div class="error-banner" id="err1"></div>
+    <button class="btn-primary" id="btn-next1" disabled onclick="goStep2()">繼續填寫預約資料 →</button>
   </div>
 
-  <!-- STEP 2: 填資料 -->
+  <!-- STEP 2 -->
   <div id="view-step2" style="display:none" class="fade-in">
-
     <div class="form-card">
       <div class="form-card-title">已選擇場次</div>
-      <div class="selected-session-tag" id="selected-tag">
-        🗓 —
-      </div>
+      <div class="selected-session-tag" id="selected-tag">🗓 —</div>
     </div>
-
     <div class="form-card">
       <div class="form-card-title">團體資訊</div>
       <div class="field">
@@ -620,7 +393,6 @@
         </div>
       </div>
     </div>
-
     <div class="form-card">
       <div class="form-card-title">出席與交通</div>
       <div class="field">
@@ -639,7 +411,6 @@
         </div>
       </div>
     </div>
-
     <div class="form-card">
       <div class="form-card-title">其他備註</div>
       <div class="field">
@@ -647,28 +418,24 @@
         <textarea id="f-notes" placeholder="例：有 5 位需要無麩質餐點、輪椅使用者人數……"></textarea>
       </div>
     </div>
-
+    <div class="error-banner" id="err2"></div>
     <div class="form-actions">
       <button class="btn-secondary" onclick="goStep1()">← 返回</button>
-      <button class="btn-primary" onclick="submitForm()">送出預約申請</button>
+      <button class="btn-primary" id="btn-submit" onclick="submitForm()">送出預約申請</button>
     </div>
   </div>
 
-  <!-- STEP 3: 成功 -->
+  <!-- STEP 3 -->
   <div id="view-step3" style="display:none" class="fade-in">
     <div class="success-wrap">
       <div class="success-icon-wrap">✅</div>
       <h2>預約申請已送出！</h2>
       <p>感謝您的預約申請。<br>我們的工作人員將盡快與您聯繫確認，<br>敬請留意來電或訊息。</p>
-
       <div class="summary-card">
         <div class="summary-header">預約資料摘要</div>
         <div id="summary-body"></div>
       </div>
-
-      <div class="reset-area">
-        <button class="btn-secondary" onclick="resetAll()">← 回到首頁</button>
-      </div>
+      <button class="btn-secondary" onclick="resetAll()">← 回到首頁</button>
     </div>
   </div>
 
@@ -679,73 +446,96 @@
 </footer>
 
 <script>
+// ── 場次基本資料 ───────────────────────────────────────────────
 const SESSIONS = [
-  { id: 1, month: "9月", day: "5", weekday: "週六（六）", full: "2025 年 9 月 5 日", booked: false },
-  { id: 2, month: "9月", day: "20", weekday: "週日（日）", full: "2025 年 9 月 20 日", booked: false },
-  { id: 3, month: "10月", day: "4", weekday: "週日（日）", full: "2025 年 10 月 4 日", booked: false },
-  { id: 4, month: "10月", day: "31", weekday: "週六（六）", full: "2025 年 10 月 31 日", booked: false },
-  { id: 5, month: "12月", day: "6", weekday: "週日（日）", full: "2025 年 12 月 6 日", booked: false },
-  { id: 6, month: "12月", day: "19", weekday: "週六（六）", full: "2025 年 12 月 19 日", booked: false },
+  { id: "2025-09-05",  month: "9月",  day: "5",  weekday: "週六（六）", full: "2025 年 9 月 5 日" },
+  { id: "2025-09-20",  month: "9月",  day: "20", weekday: "週日（日）", full: "2025 年 9 月 20 日" },
+  { id: "2025-10-04",  month: "10月", day: "4",  weekday: "週日（日）", full: "2025 年 10 月 4 日" },
+  { id: "2025-10-31",  month: "10月", day: "31", weekday: "週六（六）", full: "2025 年 10 月 31 日" },
+  { id: "2025-12-06",  month: "12月", day: "6",  weekday: "週日（日）", full: "2025 年 12 月 6 日" },
+  { id: "2025-12-19",  month: "12月", day: "19", weekday: "週六（六）", full: "2025 年 12 月 19 日" },
 ];
 
+let statusMap = {};   // { "2025-09-05": true/false, ... }  true = 已預訂
 let selectedId = null;
 
+// ── 初始化：讀取場次狀態 ──────────────────────────────────────
+async function init() {
+  showLoading("正在讀取場次狀態…");
+  try {
+    const res = await fetch(`${SCRIPT_URL}?action=getStatus`);
+    const data = await res.json();
+    if (data.ok) {
+      statusMap = data.status;
+    }
+  } catch (e) {
+    // 若讀取失敗，全部顯示可預約（降級處理）
+    SESSIONS.forEach(s => statusMap[s.id] = false);
+  }
+  renderSessions();
+  hideLoading();
+}
+
+// ── 渲染場次卡片 ──────────────────────────────────────────────
 function renderSessions() {
   const grid = document.getElementById('sessions-grid');
-  const avail = SESSIONS.filter(s => !s.booked).length;
+  const avail = SESSIONS.filter(s => !statusMap[s.id]).length;
   document.getElementById('avail-count').textContent = avail;
 
-  grid.innerHTML = SESSIONS.map(s => `
-    <div class="session-card ${s.booked ? 'booked' : ''} ${selectedId === s.id ? 'selected' : ''}"
-         onclick="${s.booked ? '' : `selectSession(${s.id})`}"
-         role="button"
-         tabindex="${s.booked ? -1 : 0}"
-         onkeydown="if(event.key==='Enter'&&!${s.booked}) selectSession(${s.id})"
-         aria-label="${s.full} ${s.booked ? '已預訂' : '可預約'}">
+  grid.innerHTML = SESSIONS.map(s => {
+    const booked = statusMap[s.id];
+    const sel = selectedId === s.id;
+    return `
+    <div class="session-card ${booked ? 'booked' : ''} ${sel ? 'selected' : ''}"
+         onclick="${booked ? '' : `selectSession('${s.id}')`}"
+         role="button" tabindex="${booked ? -1 : 0}"
+         onkeydown="if(event.key==='Enter'&&!${booked}) selectSession('${s.id}')"
+         aria-label="${s.full} ${booked ? '已預訂' : '可預約'}">
       <div class="selected-check">✓</div>
       <div class="session-month">${s.month}</div>
       <div class="session-date">${s.day}</div>
       <div class="session-weekday">${s.weekday}</div>
-      <span class="session-badge ${s.booked ? 'badge-booked' : 'badge-open'}">
-        ${s.booked ? '🔒 已預訂' : '🌿 可預約'}
+      <span class="session-badge ${booked ? 'badge-booked' : 'badge-open'}">
+        ${booked ? '🔒 已預訂' : '🌿 可預約'}
       </span>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
 function selectSession(id) {
+  if (statusMap[id]) return;
   selectedId = id;
   renderSessions();
   document.getElementById('btn-next1').disabled = false;
+  document.getElementById('err1').style.display = 'none';
 }
 
+// ── Step 切換 ─────────────────────────────────────────────────
 function setStep(n) {
   ['step1','step2','step3'].forEach((s,i) => {
-    document.getElementById('view-'+s).style.display = (i+1===n) ? 'block' : 'none';
-    if (i+1===n) document.getElementById('view-'+s).classList.add('fade-in');
+    const el = document.getElementById('view-'+s);
+    el.style.display = (i+1===n) ? 'block' : 'none';
   });
   [1,2,3].forEach(i => {
     const el = document.getElementById('si-'+i);
     el.classList.remove('active','done');
-    if (i === n) el.classList.add('active');
-    if (i < n) el.classList.add('done');
+    if (i===n) el.classList.add('active');
+    if (i<n) el.classList.add('done');
   });
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 function goStep2() {
   if (!selectedId) return;
   const s = SESSIONS.find(x => x.id === selectedId);
-  document.getElementById('selected-tag').textContent = '🗓 ' + s.full + '（' + s.weekday.replace('週','').replace('（','').replace('）','') + '）';
+  document.getElementById('selected-tag').textContent = '🗓 ' + s.full;
   setStep(2);
-  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-function goStep1() {
-  setStep(1);
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
+function goStep1() { setStep(1); }
 
-function submitForm() {
+// ── 送出預約 ──────────────────────────────────────────────────
+async function submitForm() {
   const org = document.getElementById('f-org').value.trim();
   const name = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
@@ -753,21 +543,56 @@ function submitForm() {
   const bus = document.getElementById('f-bus').value || '0';
   const car = document.getElementById('f-car').value || '0';
   const notes = document.getElementById('f-notes').value.trim();
+  const err2 = document.getElementById('err2');
 
   if (!org || !name || !phone || !headcount) {
-    alert('請填寫所有必填欄位（標有 * 的欄位）');
-    return;
+    showErr(err2, '請填寫所有必填欄位（標有 * 的欄位）'); return;
   }
-  if (headcount < 40 || headcount > 130 || isNaN(headcount)) {
-    alert('參加人數需在 40 至 130 人之間');
-    return;
+  if (isNaN(headcount) || headcount < 40 || headcount > 130) {
+    showErr(err2, '參加人數需在 40 至 130 人之間'); return;
   }
+  err2.style.display = 'none';
 
-  const s = SESSIONS.find(x => x.id === selectedId);
-  s.booked = true;
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true;
+  btn.textContent = '送出中…';
+  showLoading("正在送出預約資料…");
 
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({
+        action: 'book',
+        session: selectedId,
+        org, name, phone, headcount, bus, car, notes
+      })
+    });
+    const data = await res.json();
+    hideLoading();
+
+    if (data.ok) {
+      const s = SESSIONS.find(x => x.id === selectedId);
+      statusMap[selectedId] = true;
+      renderSessions();
+      buildSummary({ session: s.full, org, name, phone, headcount, bus, car, notes });
+      setStep(3);
+    } else {
+      showErr(err2, data.error || '送出失敗，請稍後再試');
+      btn.disabled = false;
+      btn.textContent = '送出預約申請';
+    }
+  } catch (e) {
+    hideLoading();
+    showErr(err2, '網路異常，請稍後再試');
+    btn.disabled = false;
+    btn.textContent = '送出預約申請';
+  }
+}
+
+// ── 摘要卡 ────────────────────────────────────────────────────
+function buildSummary({ session, org, name, phone, headcount, bus, car, notes }) {
   const rows = [
-    ['場次', s.full],
+    ['場次', session],
     ['團體名稱', org],
     ['聯絡人', name],
     ['聯絡電話', phone],
@@ -776,32 +601,39 @@ function submitForm() {
     ['小型車', car + ' 輛'],
   ];
   if (notes) rows.push(['備註', notes]);
-
   document.getElementById('summary-body').innerHTML = rows.map(([l,v]) =>
     `<div class="summary-row"><span class="summary-label">${l}</span><span class="summary-value">${v}</span></div>`
   ).join('');
-
-  setStep(3);
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  renderSessions();
 }
 
+// ── 重置 ──────────────────────────────────────────────────────
 function resetAll() {
   selectedId = null;
-  document.getElementById('f-org').value = '';
-  document.getElementById('f-name').value = '';
-  document.getElementById('f-phone').value = '';
-  document.getElementById('f-headcount').value = '';
-  document.getElementById('f-bus').value = '';
-  document.getElementById('f-car').value = '';
-  document.getElementById('f-notes').value = '';
+  ['f-org','f-name','f-phone','f-headcount','f-bus','f-car','f-notes'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
   document.getElementById('btn-next1').disabled = true;
+  document.getElementById('btn-submit').disabled = false;
+  document.getElementById('btn-submit').textContent = '送出預約申請';
   setStep(1);
   renderSessions();
-  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
-renderSessions();
+// ── 工具函式 ──────────────────────────────────────────────────
+function showLoading(msg) {
+  document.getElementById('loading-msg').textContent = msg;
+  document.getElementById('loading-overlay').style.display = 'flex';
+}
+function hideLoading() {
+  document.getElementById('loading-overlay').style.display = 'none';
+}
+function showErr(el, msg) {
+  el.textContent = '⚠️ ' + msg;
+  el.style.display = 'block';
+}
+
+// ── 啟動 ──────────────────────────────────────────────────────
+init();
 </script>
 </body>
 </html>
