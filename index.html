@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關農慈心農場知性之旅 · 預約系統</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-deep: #1a4a2e;
+    --green-mid: #2d7a4f;
+    --green-light: #4CAF82;
+    --green-pale: #e8f5ee;
+    --green-wash: #f3faf6;
+    --earth: #8B6914;
+    --earth-light: #f5efe0;
+    --text-primary: #1a2e1f;
+    --text-secondary: #4a6455;
+    --text-muted: #7a9485;
+    --border: #c8ddd2;
+    --border-light: #e0ece6;
+    --white: #ffffff;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--green-wash);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.7;
+  }
+
+  /* === HERO === */
+  .hero {
+    background: var(--green-deep);
+    color: white;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(ellipse at 20% 50%, rgba(77,175,130,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(45,122,79,0.2) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-stats {
+    display: inline-flex;
+    gap: 2rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius);
+    padding: 0.75rem 1.5rem;
+  }
+
+  .stat { text-align: center; }
+  .stat-num { font-size: 20px; font-weight: 700; color: #7de0b0; }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  /* === MAIN CONTAINER === */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  /* === STEP INDICATOR === */
+  .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 2rem;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .step-item.active { color: var(--green-mid); font-weight: 500; }
+  .step-item.done { color: var(--green-light); }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    background: white;
+  }
+
+  .step-item.active .step-num {
+    border-color: var(--green-mid);
+    background: var(--green-mid);
+    color: white;
+  }
+
+  .step-item.done .step-num {
+    border-color: var(--green-light);
+    background: var(--green-pale);
+    color: var(--green-mid);
+  }
+
+  .step-line {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 0 4px;
+  }
+
+  /* === NOTICE === */
+  .notice {
+    background: var(--earth-light);
+    border: 1px solid #d4b87a;
+    border-left: 3px solid var(--earth);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #5c4010;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.6;
+  }
+
+  .notice-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* === SESSION CARDS === */
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .session-card {
+    background: white;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .session-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--green-light);
+    transform: scaleX(0);
+    transition: transform 0.2s ease;
+    transform-origin: left;
+  }
+
+  .session-card:hover:not(.booked) {
+    border-color: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(45,122,79,0.12);
+  }
+
+  .session-card:hover:not(.booked)::before { transform: scaleX(1); }
+
+  .session-card.selected {
+    border-color: var(--green-mid);
+    background: var(--green-pale);
+    box-shadow: 0 0 0 3px rgba(45,122,79,0.1);
+  }
+
+  .session-card.selected::before { transform: scaleX(1); background: var(--green-mid); }
+
+  .session-card.booked {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background: #f8f8f8;
+  }
+
+  .session-month {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+
+  .session-date {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .session-weekday {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .session-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .badge-open {
+    background: var(--green-pale);
+    color: var(--green-mid);
+    border: 1px solid #b3ddc8;
+  }
+
+  .badge-booked {
+    background: #f0f0f0;
+    color: #999;
+    border: 1px solid #ddd;
+  }
+
+  .selected-check {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--green-mid);
+    color: white;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+
+  .session-card.selected .selected-check { display: flex; }
+
+  /* === BUTTONS === */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: var(--green-deep);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--green-mid);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(26,74,46,0.25);
+  }
+
+  .btn-primary:disabled {
+    background: #c5d5cc;
+    color: #8aab99;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary {
+    padding: 12px 20px;
+    background: white;
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-family: 'Noto Sans TC', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--green-mid);
+    color: var(--green-mid);
+  }
+
+  /* === FORM STEP 2 === */
+  .form-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .field { margin-bottom: 1rem; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .field label .req { color: #e05555; margin-left: 2px; }
+
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text-primary);
+    background: white;
+    transition: border-color 0.15s;
+    outline: none;
+  }
+
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--green-mid);
+    box-shadow: 0 0 0 3px rgba(45,122,79,0.08);
+  }
+
+  .field textarea { height: 90px; resize: vertical; line-height: 1.6; }
+
+  .field-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 5px;
+  }
+
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .selected-session-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-pale);
+    border: 1px solid #b3ddc8;
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--green-deep);
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+
+  .form-actions .btn-primary { flex: 1; }
+
+  /* === SUCCESS SCREEN === */
+  .success-wrap {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .success-icon-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--green-pale);
+    border: 2px solid #b3ddc8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-size: 32px;
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .success-wrap h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--green-deep);
+    margin-bottom: 0.5rem;
+  }
+
+  .success-wrap > p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+  }
+
+  .summary-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 0 auto 1.5rem;
+    text-align: left;
+  }
+
+  .summary-header {
+    background: var(--green-deep);
+    color: white;
+    padding: 12px 16px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 14px;
+    gap: 12px;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+  .summary-label { color: var(--text-muted); flex-shrink: 0; }
+  .summary-value { color: var(--text-primary); font-weight: 500; text-align: right; }
+
+  .reset-area { margin-top: 1rem; }
+
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-light);
+    background: white;
+  }
+
+  /* === ANIMATIONS === */
+  .fade-in {
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 480px) {
+    .sessions-grid { grid-template-columns: 1fr 1fr; }
+    .hero-stats { gap: 1.25rem; padding: 0.75rem 1rem; }
+    .row2 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-badge">🌿 慈心有機農業發展基金會</div>
+  <h1>關農慈心農場<br>知性之旅</h1>
+  <p class="hero-sub">2025 下半年場次預約</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" id="avail-count">6</div>
+      <div class="stat-label">可預約場次</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">40–130</div>
+      <div class="stat-label">每場人數</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1</div>
+      <div class="stat-label">場次限一團</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- STEP INDICATOR -->
+  <div class="steps" id="step-indicator">
+    <div class="step-item active" id="si-1">
+      <div class="step-num">1</div>
+      選擇場次
+    </div>
+    <div class="step-line"></div>
+    <div class="step-item" id="si-2">
+      <div class="step-num">2</div>
+      填寫資料
+    </div>
+    <div class="step-line"></div>
+    <div class="step-item" id="si-3">
+      <div class="step-num">3</div>
+      完成
+    </div>
+  </div>
+
+  <!-- STEP 1: 選場次 -->
+  <div id="view-step1" class="fade-in">
+    <div class="notice">
+      <span class="notice-icon">📋</span>
+      <span>每場次限一個團體獨立預約，不開放併團。人數建議 <strong>100 人以內</strong>最為舒適，最多不超過 130 人、最少 40 人。</span>
+    </div>
+
+    <div class="section-title">選擇您的場次</div>
+
+    <div class="sessions-grid" id="sessions-grid"></div>
+
+    <button class="btn-primary" id="btn-next1" disabled onclick="goStep2()">
+      繼續填寫預約資料 →
+    </button>
+  </div>
+
+  <!-- STEP 2: 填資料 -->
+  <div id="view-step2" style="display:none" class="fade-in">
+
+    <div class="form-card">
+      <div class="form-card-title">已選擇場次</div>
+      <div class="selected-session-tag" id="selected-tag">
+        🗓 —
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">團體資訊</div>
+      <div class="field">
+        <label>團體／單位名稱 <span class="req">*</span></label>
+        <input type="text" id="f-org" placeholder="例：台北市中山國小六年三班">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>聯絡人姓名 <span class="req">*</span></label>
+          <input type="text" id="f-name" placeholder="姓名">
+        </div>
+        <div class="field">
+          <label>聯絡電話 <span class="req">*</span></label>
+          <input type="tel" id="f-phone" placeholder="0912-345-678">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">出席與交通</div>
+      <div class="field">
+        <label>預計參加人數 <span class="req">*</span></label>
+        <input type="number" id="f-headcount" min="40" max="130" placeholder="請輸入人數（40–130 人）">
+        <div class="field-hint">💡 100 人以內體驗最為舒適</div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>遊覽車（輛）</label>
+          <input type="number" id="f-bus" min="0" placeholder="0">
+        </div>
+        <div class="field">
+          <label>小型車（輛）</label>
+          <input type="number" id="f-car" min="0" placeholder="0">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">其他備註</div>
+      <div class="field">
+        <label>飲食需求或特殊說明</label>
+        <textarea id="f-notes" placeholder="例：有 5 位需要無麩質餐點、輪椅使用者人數……"></textarea>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary" onclick="goStep1()">← 返回</button>
+      <button class="btn-primary" onclick="submitForm()">送出預約申請</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: 成功 -->
+  <div id="view-step3" style="display:none" class="fade-in">
+    <div class="success-wrap">
+      <div class="success-icon-wrap">✅</div>
+      <h2>預約申請已送出！</h2>
+      <p>感謝您的預約申請。<br>我們的工作人員將盡快與您聯繫確認，<br>敬請留意來電或訊息。</p>
+
+      <div class="summary-card">
+        <div class="summary-header">預約資料摘要</div>
+        <div id="summary-body"></div>
+      </div>
+
+      <div class="reset-area">
+        <button class="btn-secondary" onclick="resetAll()">← 回到首頁</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  慈心有機農業發展基金會 · 關農慈心農場 · 如有疑問請聯繫農場工作人員
+</footer>
+
+<script>
+const SESSIONS = [
+  { id: 1, month: "9月", day: "5", weekday: "週六（六）", full: "2025 年 9 月 5 日", booked: false },
+  { id: 2, month: "9月", day: "20", weekday: "週日（日）", full: "2025 年 9 月 20 日", booked: false },
+  { id: 3, month: "10月", day: "4", weekday: "週日（日）", full: "2025 年 10 月 4 日", booked: false },
+  { id: 4, month: "10月", day: "31", weekday: "週六（六）", full: "2025 年 10 月 31 日", booked: false },
+  { id: 5, month: "12月", day: "6", weekday: "週日（日）", full: "2025 年 12 月 6 日", booked: false },
+  { id: 6, month: "12月", day: "19", weekday: "週六（六）", full: "2025 年 12 月 19 日", booked: false },
+];
+
+let selectedId = null;
+
+function renderSessions() {
+  const grid = document.getElementById('sessions-grid');
+  const avail = SESSIONS.filter(s => !s.booked).length;
+  document.getElementById('avail-count').textContent = avail;
+
+  grid.innerHTML = SESSIONS.map(s => `
+    <div class="session-card ${s.booked ? 'booked' : ''} ${selectedId === s.id ? 'selected' : ''}"
+         onclick="${s.booked ? '' : `selectSession(${s.id})`}"
+         role="button"
+         tabindex="${s.booked ? -1 : 0}"
+         onkeydown="if(event.key==='Enter'&&!${s.booked}) selectSession(${s.id})"
+         aria-label="${s.full} ${s.booked ? '已預訂' : '可預約'}">
+      <div class="selected-check">✓</div>
+      <div class="session-month">${s.month}</div>
+      <div class="session-date">${s.day}</div>
+      <div class="session-weekday">${s.weekday}</div>
+      <span class="session-badge ${s.booked ? 'badge-booked' : 'badge-open'}">
+        ${s.booked ? '🔒 已預訂' : '🌿 可預約'}
+      </span>
+    </div>
+  `).join('');
+}
+
+function selectSession(id) {
+  selectedId = id;
+  renderSessions();
+  document.getElementById('btn-next1').disabled = false;
+}
+
+function setStep(n) {
+  ['step1','step2','step3'].forEach((s,i) => {
+    document.getElementById('view-'+s).style.display = (i+1===n) ? 'block' : 'none';
+    if (i+1===n) document.getElementById('view-'+s).classList.add('fade-in');
+  });
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('si-'+i);
+    el.classList.remove('active','done');
+    if (i === n) el.classList.add('active');
+    if (i < n) el.classList.add('done');
+  });
+}
+
+function goStep2() {
+  if (!selectedId) return;
+  const s = SESSIONS.find(x => x.id === selectedId);
+  document.getElementById('selected-tag').textContent = '🗓 ' + s.full + '（' + s.weekday.replace('週','').replace('（','').replace('）','') + '）';
+  setStep(2);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function goStep1() {
+  setStep(1);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function submitForm() {
+  const org = document.getElementById('f-org').value.trim();
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const headcount = parseInt(document.getElementById('f-headcount').value);
+  const bus = document.getElementById('f-bus').value || '0';
+  const car = document.getElementById('f-car').value || '0';
+  const notes = document.getElementById('f-notes').value.trim();
+
+  if (!org || !name || !phone || !headcount) {
+    alert('請填寫所有必填欄位（標有 * 的欄位）');
+    return;
+  }
+  if (headcount < 40 || headcount > 130 || isNaN(headcount)) {
+    alert('參加人數需在 40 至 130 人之間');
+    return;
+  }
+
+  const s = SESSIONS.find(x => x.id === selectedId);
+  s.booked = true;
+
+  const rows = [
+    ['場次', s.full],
+    ['團體名稱', org],
+    ['聯絡人', name],
+    ['聯絡電話', phone],
+    ['參加人數', headcount + ' 人'],
+    ['遊覽車', bus + ' 輛'],
+    ['小型車', car + ' 輛'],
+  ];
+  if (notes) rows.push(['備註', notes]);
+
+  document.getElementById('summary-body').innerHTML = rows.map(([l,v]) =>
+    `<div class="summary-row"><span class="summary-label">${l}</span><span class="summary-value">${v}</span></div>`
+  ).join('');
+
+  setStep(3);
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  renderSessions();
+}
+
+function resetAll() {
+  selectedId = null;
+  document.getElementById('f-org').value = '';
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-headcount').value = '';
+  document.getElementById('f-bus').value = '';
+  document.getElementById('f-car').value = '';
+  document.getElementById('f-notes').value = '';
+  document.getElementById('btn-next1').disabled = true;
+  setStep(1);
+  renderSessions();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+renderSessions();
+</script>
+</body>
+</html>
