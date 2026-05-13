@@ -227,14 +227,33 @@ const SESSIONS = [
 let statusMap = {};
 let selectedId = null;
 
-// ── 核心：全部用 JSONP（GET + script tag）────────────────────
+// ── 核心：先試 fetch，失敗再 fallback 到 JSONP ──────────────
+async function fetchGAS(url) {
+  // 加防快取參數
+  const finalUrl = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+
+  // 方法一：先嘗試一般 fetch（GitHub Pages 環境可用）
+  try {
+    const res = await fetch(finalUrl, { mode: 'cors' });
+    const text = await res.text();
+    // Apps Script 有時回傳 JSONP 格式，要處理
+    const cleaned = text.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '');
+    return JSON.parse(cleaned);
+  } catch(fetchErr) {
+    // 方法二：fetch 失敗，改用 JSONP
+    return fetchJSONP(finalUrl);
+  }
+}
+
 function fetchJSONP(url) {
   return new Promise((resolve, reject) => {
-    // 清掉舊的 script tag
     const old = document.getElementById('__gas_script');
     if (old) old.remove();
 
     const cbName = '__gasCallback';
+    // 在 url 加上 callback 參數
+    const jsonpUrl = url + '&callback=' + cbName;
+
     window[cbName] = function(data) {
       delete window[cbName];
       document.getElementById('__gas_script')?.remove();
@@ -243,21 +262,20 @@ function fetchJSONP(url) {
 
     const script = document.createElement('script');
     script.id = '__gas_script';
-    script.src = url + '&t=' + Date.now(); // 防止快取
+    script.src = jsonpUrl;
     script.onerror = () => {
       delete window[cbName];
-      reject(new Error('載入失敗'));
+      reject(new Error('載入失敗，請確認網路連線'));
     };
     document.head.appendChild(script);
 
-    // 10 秒 timeout
     setTimeout(() => {
       if (window[cbName]) {
         delete window[cbName];
         document.getElementById('__gas_script')?.remove();
-        reject(new Error('請求逾時'));
+        reject(new Error('請求逾時，請稍後再試'));
       }
-    }, 10000);
+    }, 15000);
   });
 }
 
@@ -265,7 +283,7 @@ function fetchJSONP(url) {
 async function init() {
   showLoading("正在讀取場次狀態…");
   try {
-    const data = await fetchJSONP(`${SCRIPT_URL}?action=getStatus`);
+    const data = await fetchGAS(`${SCRIPT_URL}?action=getStatus`);
     if (data.ok) statusMap = data.status;
     else SESSIONS.forEach(s => statusMap[s.id] = false);
   } catch(e) {
@@ -355,7 +373,7 @@ async function submitForm() {
   });
 
   try {
-    const data = await fetchJSONP(`${SCRIPT_URL}?${params.toString()}`);
+    const data = await fetchGAS(`${SCRIPT_URL}?${params.toString()}`);
     hideLoading();
 
     if (data.ok) {
