@@ -18,7 +18,6 @@
   }
   html { scroll-behavior: smooth; }
   body { font-family: 'Noto Sans TC', sans-serif; background: var(--green-wash); color: var(--text-primary); min-height: 100vh; line-height: 1.7; }
-
   .hero { background: var(--green-deep); color: white; padding: 3rem 1.5rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
   .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(ellipse at 20% 50%, rgba(77,175,130,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(45,122,79,0.2) 0%, transparent 50%); pointer-events: none; }
   .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 14px; font-size: 12px; letter-spacing: 0.05em; margin-bottom: 1rem; color: rgba(255,255,255,0.85); }
@@ -28,9 +27,7 @@
   .stat { text-align: center; }
   .stat-num { font-size: 20px; font-weight: 700; color: #7de0b0; }
   .stat-label { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; }
-
   .container { max-width: 720px; margin: 0 auto; padding: 2rem 1rem 4rem; }
-
   .steps { display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; }
   .step-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
   .step-item.active { color: var(--green-mid); font-weight: 500; }
@@ -39,16 +36,13 @@
   .step-item.active .step-num { border-color: var(--green-mid); background: var(--green-mid); color: white; }
   .step-item.done .step-num { border-color: var(--green-light); background: var(--green-pale); color: var(--green-mid); }
   .step-line { width: 40px; height: 1px; background: var(--border); margin: 0 4px; }
-
   .loading-overlay { position: fixed; inset: 0; background: rgba(243,250,246,0.9); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; gap: 1rem; }
   .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--green-mid); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading-overlay p { font-size: 14px; color: var(--text-secondary); }
-
   .notice { background: var(--earth-light); border: 1px solid #d4b87a; border-left: 3px solid var(--earth); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: #5c4010; margin-bottom: 1.5rem; display: flex; gap: 10px; align-items: flex-start; line-height: 1.6; }
   .section-title { font-family: 'Noto Serif TC', serif; font-size: 15px; font-weight: 500; color: var(--text-secondary); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-light); }
-
   .sessions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
   .session-card { background: white; border: 1.5px solid var(--border-light); border-radius: var(--radius); padding: 1rem 1.1rem; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; }
   .session-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--green-light); transform: scaleX(0); transition: transform 0.2s ease; transform-origin: left; }
@@ -65,13 +59,11 @@
   .badge-booked { background: #f0f0f0; color: #999; border: 1px solid #ddd; }
   .selected-check { position: absolute; top: 10px; right: 10px; width: 20px; height: 20px; border-radius: 50%; background: var(--green-mid); color: white; display: none; align-items: center; justify-content: center; font-size: 11px; }
   .session-card.selected .selected-check { display: flex; }
-
   .btn-primary { display: block; width: 100%; padding: 14px; background: var(--green-deep); color: white; border: none; border-radius: var(--radius); font-size: 15px; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em; }
   .btn-primary:hover:not(:disabled) { background: var(--green-mid); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,74,46,0.25); }
   .btn-primary:disabled { background: #c5d5cc; color: #8aab99; cursor: not-allowed; transform: none; }
   .btn-secondary { padding: 12px 20px; background: white; color: var(--text-secondary); border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 14px; font-family: 'Noto Sans TC', sans-serif; cursor: pointer; transition: all 0.2s; }
   .btn-secondary:hover { border-color: var(--green-mid); color: var(--green-mid); }
-
   .form-card { background: white; border: 1px solid var(--border-light); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; }
   .form-card-title { font-size: 13px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid var(--border-light); }
   .field { margin-bottom: 1rem; }
@@ -87,7 +79,6 @@
   .form-actions { display: flex; gap: 12px; align-items: center; margin-top: 1.5rem; }
   .form-actions .btn-primary { flex: 1; }
   .error-banner { background: #fff0f0; border: 1px solid #f5c0c0; border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: #c0392b; margin-bottom: 1rem; display: none; }
-
   .success-wrap { text-align: center; padding: 2rem 0; }
   .success-icon-wrap { width: 72px; height: 72px; border-radius: 50%; background: var(--green-pale); border: 2px solid #b3ddc8; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-size: 32px; animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
   @keyframes popIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -99,7 +90,6 @@
   .summary-row:last-child { border-bottom: none; }
   .summary-label { color: var(--text-muted); flex-shrink: 0; }
   .summary-value { color: var(--text-primary); font-weight: 500; text-align: right; }
-
   .fade-in { animation: fadeIn 0.3s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   footer { text-align: center; padding: 1.5rem 1rem; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-light); background: white; }
@@ -113,7 +103,6 @@
 <body>
 
 <script>
-  // ⚠️ 換成你的 Apps Script 部署網址
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJ1QddDH43cgZGXukDWqTSRmLAXty1yH2uIVnm3YR-OrNjH1TUz9tifMga30rqenUL/exec";
 </script>
 
@@ -227,59 +216,15 @@ const SESSIONS = [
 let statusMap = {};
 let selectedId = null;
 
-// ── 核心：先試 fetch，失敗再 fallback 到 JSONP ──────────────
+// ── 直接 fetch JSON，不做任何多餘轉換 ────────────────────────
 async function fetchGAS(url) {
-  // 加防快取參數
   const finalUrl = url + (url.includes('?') ? '&' : '?') + '_t=' + Date.now();
-
-  // 方法一：先嘗試一般 fetch（GitHub Pages 環境可用）
-  try {
-    const res = await fetch(finalUrl, { mode: 'cors' });
-    const text = await res.text();
-    // Apps Script 有時回傳 JSONP 格式，要處理
-    const cleaned = text.replace(/^[^(]+\(/, '').replace(/\);?\s*$/, '');
-    return JSON.parse(cleaned);
-  } catch(fetchErr) {
-    // 方法二：fetch 失敗，改用 JSONP
-    return fetchJSONP(finalUrl);
-  }
+  const res = await fetch(finalUrl, { mode: 'cors' });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return await res.json();
 }
 
-function fetchJSONP(url) {
-  return new Promise((resolve, reject) => {
-    const old = document.getElementById('__gas_script');
-    if (old) old.remove();
-
-    const cbName = '__gasCallback';
-    // 在 url 加上 callback 參數
-    const jsonpUrl = url + '&callback=' + cbName;
-
-    window[cbName] = function(data) {
-      delete window[cbName];
-      document.getElementById('__gas_script')?.remove();
-      resolve(data);
-    };
-
-    const script = document.createElement('script');
-    script.id = '__gas_script';
-    script.src = jsonpUrl;
-    script.onerror = () => {
-      delete window[cbName];
-      reject(new Error('載入失敗，請確認網路連線'));
-    };
-    document.head.appendChild(script);
-
-    setTimeout(() => {
-      if (window[cbName]) {
-        delete window[cbName];
-        document.getElementById('__gas_script')?.remove();
-        reject(new Error('請求逾時，請稍後再試'));
-      }
-    }, 15000);
-  });
-}
-
-// ── 初始化：讀取場次狀態 ──────────────────────────────────────
+// ── 初始化 ────────────────────────────────────────────────────
 async function init() {
   showLoading("正在讀取場次狀態…");
   try {
@@ -287,6 +232,7 @@ async function init() {
     if (data.ok) statusMap = data.status;
     else SESSIONS.forEach(s => statusMap[s.id] = false);
   } catch(e) {
+    console.error('讀取失敗：', e);
     SESSIONS.forEach(s => statusMap[s.id] = false);
   }
   renderSessions();
@@ -344,16 +290,16 @@ function goStep2() {
 }
 function goStep1() { setStep(1); }
 
-// ── 送出預約（也用 JSONP GET）─────────────────────────────────
+// ── 送出預約 ──────────────────────────────────────────────────
 async function submitForm() {
-  const org      = document.getElementById('f-org').value.trim();
-  const name     = document.getElementById('f-name').value.trim();
-  const phone    = document.getElementById('f-phone').value.trim();
+  const org       = document.getElementById('f-org').value.trim();
+  const name      = document.getElementById('f-name').value.trim();
+  const phone     = document.getElementById('f-phone').value.trim();
   const headcount = parseInt(document.getElementById('f-headcount').value);
-  const bus      = document.getElementById('f-bus').value || '0';
-  const car      = document.getElementById('f-car').value || '0';
-  const notes    = document.getElementById('f-notes').value.trim();
-  const err2     = document.getElementById('err2');
+  const bus       = document.getElementById('f-bus').value || '0';
+  const car       = document.getElementById('f-car').value || '0';
+  const notes     = document.getElementById('f-notes').value.trim();
+  const err2      = document.getElementById('err2');
 
   if (!org || !name || !phone || !headcount) { showErr(err2,'請填寫所有必填欄位'); return; }
   if (isNaN(headcount) || headcount < 40 || headcount > 130) { showErr(err2,'參加人數需在 40 至 130 人之間'); return; }
@@ -363,19 +309,14 @@ async function submitForm() {
   btn.disabled = true; btn.textContent = '送出中…';
   showLoading("正在送出預約資料…");
 
-  // 把資料塞進 URL 參數（JSONP GET 方式）
   const params = new URLSearchParams({
-    action: 'book',
-    session: selectedId,
-    org, name, phone,
-    headcount, bus, car,
-    notes
+    action: 'book', session: selectedId,
+    org, name, phone, headcount, bus, car, notes
   });
 
   try {
     const data = await fetchGAS(`${SCRIPT_URL}?${params.toString()}`);
     hideLoading();
-
     if (data.ok) {
       statusMap[selectedId] = true;
       renderSessions();
@@ -412,7 +353,7 @@ function resetAll() {
   document.getElementById('btn-submit').disabled = false;
   document.getElementById('btn-submit').textContent = '送出預約申請';
   setStep(1);
-  init(); // 重新從試算表讀最新狀態
+  init();
 }
 
 function showLoading(msg) { document.getElementById('loading-msg').textContent = msg; document.getElementById('loading-overlay').style.display = 'flex'; }
