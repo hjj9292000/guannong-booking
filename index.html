@@ -103,17 +103,16 @@
 <body>
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxG2kG0ceHXFlA-BIi_5Xvh5HFQa8ILeMPiSVhhgnfsbZz2kpjrqRyzI937-mqz13w/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJ1QddDH43cgZGXukDWqTSRmLAXty1yH2uIVnm3YR-OrNjH1TUz9tifMga30rqenUL/exec";
 </script>
 
 <header class="hero">
   <div class="hero-badge">🌿 慈心有機農業發展基金會</div>
   <h1>關農慈心農場<br>知性之旅</h1>
-  <p class="hero-sub">2025 下半年場次預約</p>
+  <p class="hero-sub">2026 下半年場次預約</p>
   <div class="hero-stats">
-    <div class="stat"><div class="stat-num" id="avail-count">—</div><div class="stat-label">可預約場次</div></div>
+    <div class="stat"><div class="stat-num" id="avail-count">—</div><div class="stat-label">目前可預約場次</div></div>
     <div class="stat"><div class="stat-num">40–130</div><div class="stat-label">每場人數</div></div>
-    <div class="stat"><div class="stat-num">1</div><div class="stat-label">場次限一團</div></div>
   </div>
 </header>
 
@@ -135,7 +134,7 @@
   <div id="view-step1" class="fade-in">
     <div class="notice">
       <span>📋</span>
-      <span>每場次限一個團體獨立預約，不開放併團。人數建議 <strong>100 人以內</strong>最為舒適，最多不超過 130 人、最少 40 人。</span>
+      <span>每場次限一組預約，人數建議 <strong>100 人以內</strong>最為舒適，最多不超過 130 人、最少 40 人。若您的團體人數較少，歡迎與我們聯繫，我們可以一起討論最適合的安排。</span>
     </div>
     <div class="section-title">選擇您的場次</div>
     <div class="sessions-grid" id="sessions-grid"></div>
@@ -153,7 +152,7 @@
       <div class="form-card-title">團體資訊</div>
       <div class="field">
         <label>團體／單位名稱 <span class="req">*</span></label>
-        <input type="text" id="f-org" placeholder="例：台北市中山國小六年三班">
+        <input type="text" id="f-org" placeholder="例：22秋266班、xx公司">
       </div>
       <div class="row2">
         <div class="field"><label>聯絡人姓名 <span class="req">*</span></label><input type="text" id="f-name" placeholder="姓名"></div>
@@ -176,7 +175,7 @@
       <div class="form-card-title">其他備註</div>
       <div class="field">
         <label>飲食需求或特殊說明</label>
-        <textarea id="f-notes" placeholder="例：有 5 位需要無麩質餐點、輪椅使用者人數……"></textarea>
+        <textarea id="f-notes" placeholder="例：幼兒 2 位、需無麩質餐點 3 份、行動不便者 1 位、需接駁服務"></textarea>
       </div>
     </div>
     <div class="error-banner" id="err2"></div>
