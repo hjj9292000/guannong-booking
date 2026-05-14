@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>關農慈心農場知性之旅 · 預約系統</title>
+<title>關西慈心農場知性之旅 · 預約系統</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -103,16 +103,16 @@
 <body>
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxlknR7UstpHPMdcDnvhjT9u621DNkZmdIsTOpGNomoMCj8C8iI0lY-qOKaKrnpVfJ7/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwG2ek99dEreyRwVksLbL5-6mDz5rSV-0fHCifTrMZ-fVoI43pc1svy0nbrm0s2u4ce/exec";
 </script>
 
 <header class="hero">
   <div class="hero-badge">🌿 慈心有機農業發展基金會</div>
-  <h1>關農慈心農場<br>知性之旅</h1>
+  <h1>關西慈心農場<br>知性之旅</h1>
   <p class="hero-sub">2026 下半年場次預約</p>
   <div class="hero-stats">
     <div class="stat"><div class="stat-num" id="avail-count">—</div><div class="stat-label">目前可預約場次</div></div>
-    <div class="stat"><div class="stat-num">40–130</div><div class="stat-label">每場人數</div></div>
+    <div class="stat"><div class="stat-num">40–100</div><div class="stat-label">每場人數</div></div>
   </div>
 </header>
 
@@ -134,7 +134,7 @@
   <div id="view-step1" class="fade-in">
     <div class="notice">
       <span>📋</span>
-      <span>每場次限一組預約，人數建議 <strong>100 人以內</strong>最為舒適，最多不超過 130 人、最少 40 人。若您的團體人數較少，歡迎與我們聯繫，我們可以一起討論最適合的安排。</span>
+      <span>每場次限一組預約，最多不超過 100 人、最少 40 人。若您的團體人數較少，歡迎與我們聯繫，我們可以一起討論最適合的安排。</span>
     </div>
     <div class="section-title">選擇您的場次</div>
     <div class="sessions-grid" id="sessions-grid"></div>
@@ -163,8 +163,8 @@
       <div class="form-card-title">出席與交通</div>
       <div class="field">
         <label>預計參加人數 <span class="req">*</span></label>
-        <input type="number" id="f-headcount" min="40" max="130" placeholder="請輸入人數（40–130 人）">
-        <div class="field-hint">💡 100 人以內體驗最為舒適</div>
+        <input type="number" id="f-headcount" min="40" max="100" placeholder="請輸入人數（40–100 人）">
+        <div class="field-hint">💡 80 人以下體驗最為舒適</div>
       </div>
       <div class="row2">
         <div class="field"><label>遊覽車（輛）</label><input type="number" id="f-bus" min="0" placeholder="0"></div>
@@ -200,7 +200,7 @@
   </div>
 </div>
 
-<footer>慈心有機農業發展基金會 · 關農慈心農場 · 如有疑問請聯繫農場工作人員</footer>
+<footer>慈心有機農業發展基金會 · 關西慈心農場 · 如有疑問請聯繫農場工作人員</footer>
 
 <script>
 const SESSIONS = [
@@ -301,7 +301,7 @@ async function submitForm() {
   const err2      = document.getElementById('err2');
 
   if (!org || !name || !phone || !headcount) { showErr(err2,'請填寫所有必填欄位'); return; }
-  if (isNaN(headcount) || headcount < 40 || headcount > 130) { showErr(err2,'參加人數需在 40 至 130 人之間'); return; }
+  if (isNaN(headcount) || headcount < 40 || headcount > 100) { showErr(err2,'參加人數需在 40 至 100 人之間'); return; }
   err2.style.display = 'none';
 
   const btn = document.getElementById('btn-submit');
