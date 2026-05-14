@@ -103,7 +103,7 @@
 <body>
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwG2ek99dEreyRwVksLbL5-6mDz5rSV-0fHCifTrMZ-fVoI43pc1svy0nbrm0s2u4ce/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwUZ32fmFa5ePznhig7h8ykUpRfbXOTejSWhR31aE9Bqa5vHk1eSu0cwHesYYJXDymz/exec";
 </script>
 
 <header class="hero">
@@ -158,6 +158,10 @@
         <div class="field"><label>聯絡人姓名 <span class="req">*</span></label><input type="text" id="f-name" placeholder="姓名"></div>
         <div class="field"><label>聯絡電話 <span class="req">*</span></label><input type="tel" id="f-phone" placeholder="0912-345-678"></div>
       </div>
+      <div class="row2">
+        <div class="field"><label>E-mail <span class="req">*</span></label><input type="email" id="f-email" placeholder="example@mail.com"></div>
+        <div class="field"><label>LINE ID <span style="font-size:11px;color:var(--text-muted);">選填</span></label><input type="text" id="f-line" placeholder="@your_line_id"></div>
+      </div>
     </div>
     <div class="form-card">
       <div class="form-card-title">出席與交通</div>
@@ -207,7 +211,7 @@ const SESSIONS = [
   { id: "2026-09-05",  month: "9月",  day: "5",  weekday: "週六（六）", full: "2026 年 9 月 5 日" },
   { id: "2026-09-20",  month: "9月",  day: "20", weekday: "週日（日）", full: "2026 年 9 月 20 日" },
   { id: "2026-10-04",  month: "10月", day: "4",  weekday: "週日（日）", full: "2026 年 10 月 4 日" },
-  { id: "2026-10-31",  month: "10月", day: "31", weekday: "週六（六）", full: "2026 年 10 月 31 日" },
+  { id: "2026-10-24",  month: "10月", day: "24", weekday: "週六（六）", full: "2026 年 10 月 24 日" },
   { id: "2026-12-06",  month: "12月", day: "6",  weekday: "週日（日）", full: "2026 年 12 月 6 日" },
   { id: "2026-12-19",  month: "12月", day: "19", weekday: "週六（六）", full: "2026 年 12 月 19 日" },
 ];
@@ -298,9 +302,12 @@ async function submitForm() {
   const bus       = document.getElementById('f-bus').value || '0';
   const car       = document.getElementById('f-car').value || '0';
   const notes     = document.getElementById('f-notes').value.trim();
+  const email     = document.getElementById('f-email').value.trim();
+  const line      = document.getElementById('f-line').value.trim();
   const err2      = document.getElementById('err2');
 
-  if (!org || !name || !phone || !headcount) { showErr(err2,'請填寫所有必填欄位'); return; }
+  if (!org || !name || !phone || !headcount || !email) { showErr(err2,'請填寫所有必填欄位'); return; }
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) { showErr(err2,'請輸入正確的 E-mail 格式'); return; }
   if (isNaN(headcount) || headcount < 40 || headcount > 100) { showErr(err2,'參加人數需在 40 至 100 人之間'); return; }
   err2.style.display = 'none';
 
@@ -310,7 +317,7 @@ async function submitForm() {
 
   const params = new URLSearchParams({
     action: 'book', session: selectedId,
-    org, name, phone, headcount, bus, car, notes
+    org, name, phone, email, line, headcount, bus, car, notes
   });
 
   try {
@@ -336,7 +343,7 @@ async function submitForm() {
 function buildSummary({ session, org, name, phone, headcount, bus, car, notes }) {
   const rows = [
     ['場次', session], ['團體名稱', org], ['聯絡人', name],
-    ['聯絡電話', phone], ['參加人數', headcount + ' 人'],
+    ['聯絡電話', phone], ['E-mail', email], ['LINE ID', line || '（未填）'], ['參加人數', headcount + ' 人'],
     ['遊覽車', bus + ' 輛'], ['小型車', car + ' 輛'],
   ];
   if (notes) rows.push(['備註', notes]);
@@ -347,7 +354,7 @@ function buildSummary({ session, org, name, phone, headcount, bus, car, notes })
 
 function resetAll() {
   selectedId = null;
-  ['f-org','f-name','f-phone','f-headcount','f-bus','f-car','f-notes'].forEach(id => document.getElementById(id).value = '');
+  ['f-org','f-name','f-phone','f-email','f-line','f-headcount','f-bus','f-car','f-notes'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('btn-next1').disabled = true;
   document.getElementById('btn-submit').disabled = false;
   document.getElementById('btn-submit').textContent = '送出預約申請';
