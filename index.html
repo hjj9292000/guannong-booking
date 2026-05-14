@@ -327,7 +327,7 @@ async function submitForm() {
       statusMap[selectedId] = true;
       renderSessions();
       const s = SESSIONS.find(x => x.id === selectedId);
-      buildSummary({ session: s.full, org, name, phone, headcount, bus, car, notes });
+      buildSummary({ session: s.full, org, name, phone, email, line, headcount, bus, car, notes });
       setStep(3);
     } else {
       showErr(err2, data.error || '送出失敗，請稍後再試');
@@ -340,7 +340,7 @@ async function submitForm() {
   }
 }
 
-function buildSummary({ session, org, name, phone, headcount, bus, car, notes }) {
+function buildSummary({ session, org, name, phone, email, line, headcount, bus, car, notes }) {
   const rows = [
     ['場次', session], ['團體名稱', org], ['聯絡人', name],
     ['聯絡電話', phone], ['E-mail', email], ['LINE ID', line || '（未填）'], ['參加人數', headcount + ' 人'],
